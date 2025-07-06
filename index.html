@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAST RADIO | Herramienta profesional para GTAHUB.GG</title>
+    <meta name="description" content="Herramienta profesional de comunicación para departamentos policiales en GTAHUB.GG">
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667cc;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --light: #f8f9fa;
+            --gray: #2b2b2b;
+            --gray-light: #3d3d3d;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #fd7e14;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent);
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--darker) 0%, var(--gray) 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 40px;
+            filter: drop-shadow(0 0 5px rgba(58, 134, 255, 0.5));
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(58, 134, 255, 0.3);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.6);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            background: radial-gradient(circle at 70% 30%, rgba(58, 134, 255, 0.1) 0%, transparent 50%), 
+                        linear-gradient(to bottom, var(--darker) 0%, var(--gray) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/JqYeZ0L.png') center/cover no-repeat;
+            opacity: 0.03;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: perspective(1000px) rotateY(-10deg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            mix-blend-mode: screen;
+            opacity: 0.1;
+            border-radius: 10px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: var(--light);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .secondary-button:hover {
+            background: rgba(58, 134, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background-color: var(--dark);
+            position: relative;
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/9E7zQqW.png') center/cover no-repeat;
+            opacity: 0.02;
+            z-index: 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(58, 134, 255, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 2rem;
+            background-color: var(--darker);
+        }
+        
+        .steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .step {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+        
+        .step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .step-number {
+            font-size: 5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.05);
+            min-width: 100px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-image {
+            flex: 1;
+        }
+        
+        .step-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .step h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Departamentos Compatibles */
+        .departments {
+            padding: 6rem 2rem;
+            background-color: var(--dark);
+        }
+        
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .department-card {
+            background: rgba(30, 30, 30, 0.7);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .department-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(58, 134, 255, 0.1);
+            border: 2px solid var(--primary);
+        }
+        
+        .department-logo img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .department-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .department-card p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* FAQ */
+        .faq {
+            padding: 6rem 2rem;
+            background-color: var(--darker);
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            background: rgba(40, 40, 40, 0.7);
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: rgba(58, 134, 255, 0.1);
+        }
+        
+        .faq-question h3 {
+            margin-bottom: 0;
+            font-size: 1.2rem;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary) 100%);
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--darker);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Animaciones personalizadas */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                margin-bottom: 3rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step:nth-child(even) {
+                flex-direction: column;
+            }
+            
+            .step-number {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="assets/logo fast radio.png" alt="FAST RADIO Logo">
+                <span class="logo-text">FAST RADIO</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Características</a>
+                <a href="#how-it-works">Cómo funciona</a>
+                <a href="#departments">Departamentos</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a href="#prices.html" class="cta-button">Ver precios</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text" data-aos="fade-right">
+                <h1>Comunicación policial <span style="color: var(--primary)">rápida y eficiente</span></h1>
+                <p>La herramienta definitiva para los departamentos policiales en GTAHUB.GG. Optimiza tus comunicaciones con mensajes predefinidos, callsign personalizado y categorías intuitivas.</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="cta-button pulse">Explorar características</a>
+                    <a href="#prices.html" class="secondary-button">Ver planes</a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <img src="fastradio-interface.png" alt="FAST RADIO Interface" class="float">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Características Principales</h2>
+            <p>Descubre todo lo que FAST RADIO puede hacer para mejorar tus patrullas en Los Santos</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">🚔</div>
+                <h3>Mensajes Predefinidos</h3>
+                <p>Accede a más de 50 mensajes organizados por categorías para todas las situaciones de patrulla.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">📋</div>
+                <h3>Callsign Personalizado</h3>
+                <p>Tu identificador se inserta automáticamente en todos los mensajes para ahorrar tiempo.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">🔍</div>
+                <h3>Búsqueda Rápida</h3>
+                <p>Encuentra el mensaje perfecto en segundos con nuestro sistema de búsqueda inteligente.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon">⏱️</div>
+                <h3>Hora del Servidor</h3>
+                <p>Muestra en tiempo real la hora oficial de GTAHUB.GG para tus reportes.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-icon">🛡️</div>
+                <h3>Acceso Seguro</h3>
+                <p>Sistema de whitelist por IP para garantizar que solo miembros autorizados puedan acceder.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-icon">📱</div>
+                <h3>Diseño Responsivo</h3>
+                <p>Funciona perfectamente en cualquier dispositivo, desde ordenadores hasta móviles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Cómo Funciona</h2>
+            <p>Empieza a usar FAST RADIO en solo 3 sencillos pasos</p>
+        </div>
+        <div class="steps">
+            <div class="step" data-aos="fade-up">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3>Ingresa tu Callsign</h3>
+                    <p>Escribe tu identificador único en el campo correspondiente. FAST RADIO lo recordará para futuras visitas.</p>
+                </div>
+                <div class="step-image">
+                    <img src="assets/paso1.png" alt="Paso 1">
+                </div>
+            </div>
+            <div class="step" data-aos="fade-up">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3>Selecciona una Categoría</h3>
+                    <p>Navega por las diferentes categorías de mensajes según la situación: tráfico, emergencias, reportes, etc.</p>
+                </div>
+                <div class="step-image">
+                    <img src="assets/paso2.png" alt="Paso 2">
+                </div>
+            </div>
+            <div class="step" data-aos="fade-up">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3>Copia y Pega</h3>
+                    <p>Haz clic en el botón de copiar y pega directamente en Discord o el chat del juego. ¡Listo!</p>
+                </div>
+                <div class="step-image">
+                    <img src="assets/paso3.png" alt="Paso 3">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departamentos Compatibles -->
+    <section class="departments" id="departments">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Departamentos Compatibles</h2>
+            <p>FAST RADIO está diseñado para adaptarse a las necesidades de diferentes agencias policiales</p>
+        </div>
+        <div class="departments-grid">
+            <div class="department-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="department-logo">
+                    <img src="assets/LOGO_LSPD_NUEVO.png" alt="LSPD Logo">
+                </div>
+                <h3>LSPD</h3>
+                <p>Los Santos Police Department</p>
+                <p>Versión especializada para LSPD</p>
+            </div>
+            <div class="department-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="department-logo">
+                    <img src="assets/LOGO_LSSD_NUEVO.png" alt="LSSD Logo">
+                </div>
+                <h3>LSSD</h3>
+                <p>Los Santos Sheriff Department</p>
+                <p>Versión especializada para LSSD</p>
+            </div>
+            <div class="department-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="department-logo">
+                    <img src="assets/LOGO_USMS_NUEVO.png" alt="USMS Logo">
+                </div>
+                <h3>USMS</h3>
+                <p>United States Marshals Service</p>
+                <p>Versión especializada para USMS</p>
+            </div>
+            <div class="department-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="department-logo">
+                    <img src="assets/LOGO_SASPS_NUEVO.webp" alt="SASPS Logo">
+                </div>
+                <h3>SASPS</h3>
+                <p>Policía Estatal de San Andreas</p>
+                <p>Protocolos para carreteras y operaciones estatales</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="section-title" data-aos="fade-up">
+            <h2>Preguntas Frecuentes</h2>
+            <p>Respuestas a las dudas más comunes</p>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">
+                    <h3>¿Necesito instalar algo para usar FAST RADIO?</h3>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>No, FAST RADIO es una herramienta web que funciona directamente en tu navegador. Solo necesitas una conexión a internet y un dispositivo moderno (ordenador, tablet o móvil).</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">
+                    <h3>¿Cómo se garantiza la seguridad del acceso?</h3>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Utilizamos un sistema de whitelist por dirección IP. Solo las IPs autorizadas pueden acceder al contenido. Además, implementamos medidas contra el copiado no autorizado del contenido.</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">
+                    <h3>¿Puedo sugerir nuevos mensajes o categorías?</h3>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>¡Absolutamente! Dentro de la herramienta hay una sección de feedback donde puedes enviar tus sugerencias. Las revisamos periódicamente y las implementamos en actualizaciones futuras.</p>
+                </div>
+            </div>
+            <div class="faq-item" data-aos="fade-up">
+                <div class="faq-question">
+                    <h3>¿Qué pasa si cambio de IP?</h3>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Si tienes un plan Profesional o Departamental, puedes actualizar tu IP autorizada desde el panel de configuración. Para usuarios Básicos, contacta con soporte para actualizar tu acceso.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div data-aos="fade-up">
+            <h2>¿Listo para optimizar tus comunicaciones?</h2>
+            <p>Únete a docenas de oficiales que ya usan FAST RADIO para patrullar las calles de Los Santos con mayor eficiencia.</p>
+            <a href="#prices.html" class="cta-button pulse">Ver planes y precios</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>FAST RADIO</h3>
+                <p>La herramienta definitiva para comunicaciones policiales en GTAHUB.GG. Diseñada por y para oficiales de diferentes departamentos.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Enlaces</h3>
+                <ul class="footer-links">
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#how-it-works">Cómo funciona</a></li>
+                    <li><a href="#departments">Departamentos</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul class="footer-links">
+                            <li><a href="terminos.html">Términos de servicio</a></li>
+                            <li><a href="privacidad.html">Política de privacidad</a></li>
+                            <li><a href="aviso-legal.html">Aviso legal</a></li>
+                        </ul>
+                    </div>
+            <div class="footer-column">
+                <h3>Contacto</h3>
+                <ul class="footer-links">
+                    <li><a href="mailto:soporte@fastradio.com">soporte@fastradio.com</a></li>
+                    <li><a href="https://discord.gg/erV2MnJNza">Discord de soporte</a></li>
+                    <li><a href="#">Reportar un problema</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 FAST RADIO. Todos los derechos reservados. No afiliado a Rockstar Games ni a GTAHUB.GG.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <!-- AOS (Animate On Scroll) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+                
+                // Cambiar el signo + por - cuando está activo
+                const sign = question.querySelector('span');
+                sign.textContent = item.classList.contains('active') ? '−' : '+';
+            });
+        });
+        
+        // Smooth scrolling para enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Efecto de cambio de color en el header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--darker) 0%, var(--gray) 100%)';
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+            }
+        });
+    </script>
+</body>
+</html>
