@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,13 +26,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
     <!-- AOS (Animate On Scroll) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary: #3a86ff;
@@ -660,9 +661,30 @@
                 margin-bottom: 1rem;
             }
         }
+          #notifBlock {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff4d4d;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 9999;
+  }
+  #notifBlock.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
     </style>
 </head>
+
 <body>
+    <div id="notifBlock"></div>
     <!-- Header -->
     <header>
         <div class="navbar">
@@ -895,14 +917,14 @@
                     <li><a href="#faq">FAQ</a></li>
                 </ul>
             </div>
-                    <div class="footer-column">
-                        <h3>Legal</h3>
-                        <ul class="footer-links">
-                            <li><a href="terminos.html">Términos de servicio</a></li>
-                            <li><a href="privacidad.html">Política de privacidad</a></li>
-                            <li><a href="aviso-legal.html">Aviso legal</a></li>
-                        </ul>
-                    </div>
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terminos.html">Términos de servicio</a></li>
+                    <li><a href="privacidad.html">Política de privacidad</a></li>
+                    <li><a href="aviso-legal.html">Aviso legal</a></li>
+                </ul>
+            </div>
             <div class="footer-column">
                 <h3>Contacto</h3>
                 <ul class="footer-links">
@@ -919,59 +941,85 @@
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    
+
     <!-- AOS (Animate On Scroll) -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
     <script>
-        // Inicializar AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+        const notif = document.getElementById('notifBlock');
         
-        // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentNode;
-                item.classList.toggle('active');
-                
-                // Cambiar el signo + por - cuando está activo
-                const sign = question.querySelector('span');
-                sign.textContent = item.classList.contains('active') ? '−' : '+';
-            });
-        });
+          function showNotif(msg) {
+            notif.textContent = msg;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 3000);
+          }
         
-        // Smooth scrolling para enlaces
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+          // Bloquear clic derecho
+          document.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            showNotif("❌ Clic derecho desactivado");
+          });
         
-        // Efecto de cambio de color en el header al hacer scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.background = 'rgba(10, 10, 10, 0.95)';
-                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
-            } else {
-                header.style.background = 'linear-gradient(135deg, var(--darker) 0%, var(--gray) 100%)';
-                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+          // Bloquear herramientas de desarrollo
+          document.addEventListener('keydown', e => {
+            if (
+              e.key === "F12" ||
+              (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+              (e.ctrlKey && e.key === "U")
+            ) {
+              e.preventDefault();
+              showNotif("🚫 Acción bloqueada por seguridad");
             }
-        });
+          });
+                // Inicializar AOS
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-in-out',
+                    once: true
+                });
+                
+                // FAQ Accordion
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const item = question.parentNode;
+                        item.classList.toggle('active');
+                        
+                        // Cambiar el signo + por - cuando está activo
+                        const sign = question.querySelector('span');
+                        sign.textContent = item.classList.contains('active') ? '−' : '+';
+                    });
+                });
+                
+                // Smooth scrolling para enlaces
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        const targetId = this.getAttribute('href');
+                        if (targetId === '#') return;
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+                
+                // Efecto de cambio de color en el header al hacer scroll
+                window.addEventListener('scroll', () => {
+                    const header = document.querySelector('header');
+                    if (window.scrollY > 50) {
+                        header.style.background = 'rgba(10, 10, 10, 0.95)';
+                        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.5)';
+                    } else {
+                        header.style.background = 'linear-gradient(135deg, var(--darker) 0%, var(--gray) 100%)';
+                        header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+                    }
+                });
     </script>
 </body>
+
 </html>

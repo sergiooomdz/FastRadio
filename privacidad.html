@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary: #3a86ff;
@@ -38,7 +39,25 @@
             --gray: #2b2b2b;
             --gray-light: #3d3d3d;
         }
-        
+         #notifBlock {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff4d4d;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 9999;
+  }
+  #notifBlock.show {
+    opacity: 1;
+    transform: translateY(0);
+  } 
         * {
             margin: 0;
             padding: 0;
@@ -208,12 +227,15 @@
         }
     </style>
 </head>
+
 <body>
+    <div id="notifBlock"></div>
+
     <!-- Header -->
     <header>
         <div class="navbar">
             <div class="logo">
-                <img src="https://i.imgur.com/gpgiABY.png" alt="FAST RADIO Logo">
+                <img src="assets/logo fast radio.png" alt="FAST RADIO Logo">
                 <span class="logo-text">FAST RADIO</span>
             </div>
         </div>
@@ -225,7 +247,7 @@
             <h1>Política de Privacidad</h1>
             <p>Última actualización: 5 de julio de 2025</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>1. Información que Recopilamos</h2>
             <p>Para proporcionar y mejorar FAST RADIO ("el Servicio"), recopilamos la siguiente información:</p>
@@ -235,7 +257,7 @@
                 <li><strong>Información de cuenta:</strong> Callsigns registrados, preferencias de usuario.</li>
             </ul>
         </div>
-        
+
         <div class="legal-section">
             <h2>2. Uso de la Información</h2>
             <p>Utilizamos la información recopilada para:</p>
@@ -247,7 +269,7 @@
                 <li>Enviar notificaciones importantes sobre el servicio</li>
             </ul>
         </div>
-        
+
         <div class="legal-section">
             <h2>3. Compartir Información</h2>
             <p>No vendemos ni alquilamos su información personal a terceros. Podemos compartir información en los siguientes casos:</p>
@@ -257,7 +279,7 @@
                 <li><strong>Proveedores de servicio:</strong> Con proveedores que nos ayudan a operar el servicio (ej. hosting), bajo acuerdos de confidencialidad.</li>
             </ul>
         </div>
-        
+
         <div class="legal-section">
             <h2>4. Seguridad de Datos</h2>
             <p>Implementamos medidas de seguridad técnicas y organizativas para proteger su información:</p>
@@ -268,12 +290,12 @@
             </ul>
             <p>Sin embargo, ningún método de transmisión por Internet o almacenamiento electrónico es 100% seguro.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>5. Retención de Datos</h2>
             <p>Conservamos su información solo durante el tiempo necesario para los fines descritos en esta política, excepto cuando la ley requiera un período de retención más largo.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>6. Sus Derechos</h2>
             <p>Usted tiene derecho a:</p>
@@ -285,12 +307,12 @@
             </ul>
             <p>Para ejercer estos derechos, contacte con nosotros a través de nuestro <a href="https://discord.gg/erV2MnJNza">servidor de Discord</a>.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>7. Cambios a esta Política</h2>
             <p>Podemos actualizar nuestra Política de Privacidad ocasionalmente. Le notificaremos de cualquier cambio publicando la nueva política en esta página con una nueva fecha de "Última actualización".</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>8. Contacto</h2>
             <p>Para preguntas sobre esta Política de Privacidad, contacte con nosotros a través de nuestro <a href="https://discord.gg/erV2MnJNza">servidor de Discord</a> o al correo electrónico <a href="mailto:soporte@fastradio.com">soporte@fastradio.com</a>.</p>
@@ -303,9 +325,37 @@
             <a href="index.html">Inicio</a>
             <a href="terminos.html">Términos de Servicio</a>
             <a href="aviso-legal.html">Aviso Legal</a>
-            <a href="https://sergiooomdz.github.io/FastRadio_PRICES/">Precios</a>
+            <a href="precios.html">Precios</a>
         </div>
         <p class="copyright">© 2025 FAST RADIO. Todos los derechos reservados. No afiliado a Rockstar Games ni a GTAHUB.GG.</p>
     </footer>
 </body>
+<script>
+    const notif = document.getElementById('notifBlock');
+    
+      function showNotif(msg) {
+        notif.textContent = msg;
+        notif.classList.add('show');
+        setTimeout(() => notif.classList.remove('show'), 3000);
+      }
+    
+      // Bloquear clic derecho
+      document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        showNotif("❌ Clic derecho desactivado");
+      });
+    
+      // Bloquear herramientas de desarrollo
+      document.addEventListener('keydown', e => {
+        if (
+          e.key === "F12" ||
+          (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+          (e.ctrlKey && e.key === "U")
+        ) {
+          e.preventDefault();
+          showNotif("🚫 Acción bloqueada por seguridad");
+        }
+      });
+</script>
+
 </html>

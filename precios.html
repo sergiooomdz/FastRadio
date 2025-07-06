@@ -46,7 +46,25 @@
             --danger: #dc3545;
             --warning: #fd3714;
         }
-        
+          #notifBlock {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff4d4d;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 9999;
+  }
+  #notifBlock.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
         * {
             margin: 0;
             padding: 0;
@@ -500,6 +518,8 @@
 </head>
 
 <body>
+    <div id="notifBlock"></div>
+
     <!-- Header con botón de regreso -->
     <header class="header">
         <div class="logo">
@@ -609,6 +629,31 @@
 
     <!-- Script Interno -->
     <script>
+        const notif = document.getElementById('notifBlock');
+
+  function showNotif(msg) {
+    notif.textContent = msg;
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 3000);
+  }
+
+  // Bloquear clic derecho
+  document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    showNotif("❌ Clic derecho desactivado");
+  });
+
+  // Bloquear herramientas de desarrollo
+  document.addEventListener('keydown', e => {
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+      (e.ctrlKey && e.key === "U")
+    ) {
+      e.preventDefault();
+      showNotif("🚫 Acción bloqueada por seguridad");
+    }
+  });
         document.addEventListener("DOMContentLoaded", function () {
           const plansData = [
             {

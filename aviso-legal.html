@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --primary: #3a86ff;
@@ -206,14 +207,36 @@
                 padding: 1.5rem;
             }
         }
+          #notifBlock {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ff4d4d;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 9999;
+  }
+  #notifBlock.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
     </style>
 </head>
+
 <body>
+    <div id="notifBlock"></div>
+
     <!-- Header -->
     <header>
         <div class="navbar">
             <div class="logo">
-                <img src="https://i.imgur.com/gpgiABY.png" alt="FAST RADIO Logo">
+                <img src="assets/logo fast radio.png" alt="FAST RADIO Logo">
                 <span class="logo-text">FAST RADIO</span>
             </div>
         </div>
@@ -225,20 +248,20 @@
             <h1>Aviso Legal</h1>
             <p>Información legal sobre FAST RADIO y su uso</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>1. Identificación del Titular</h2>
             <p><strong>Nombre:</strong> Sergioo (seudónimo)</p>
             <p><strong>Contacto:</strong> A través de nuestro <a href="https://discord.gg/erV2MnJNza">servidor de Discord</a> o correo electrónico <a href="mailto:soporte@fastradio.com">soporte@fastradio.com</a></p>
             <p><strong>Actividad:</strong> Desarrollo y mantenimiento de herramientas para roleplay en GTAHUB.GG</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>2. Propiedad Intelectual</h2>
-            <p>Todos los contenidos de FAST RADIO (incluyendo textos, gráficos, logotipos, código fuente y diseño) son propiedad exclusiva de Sergioo, salvo indicación expresa en contrario.</p>
+            <p>Todos los contenidos de FAST RADIO (incluyendo textos, gráficos, código fuente y diseño) son propiedad exclusiva del propietario "sergioo", salvo indicación expresa en contrario.</p>
             <p>Queda estrictamente prohibida la reproducción, distribución, comunicación pública o transformación de estos contenidos sin autorización expresa.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>3. Exención de Responsabilidad</h2>
             <p>FAST RADIO es una herramienta independiente no afiliada oficialmente a:</p>
@@ -254,27 +277,27 @@
                 <li>Uso no autorizado de las cuentas de los usuarios</li>
             </ul>
         </div>
-        
+
         <div class="legal-section">
             <h2>4. Enlaces a Terceros</h2>
             <p>FAST RADIO puede contener enlaces a sitios web de terceros. No tenemos control sobre estos sitios y no asumimos responsabilidad por su contenido, políticas de privacidad o prácticas.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>5. Limitación de Garantías</h2>
             <p>FAST RADIO se proporciona "tal cual" y "según disponibilidad". No ofrecemos garantías de ningún tipo, ya sean expresas o implícitas, sobre la operatividad, disponibilidad o adecuación del servicio para un propósito particular.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>6. Jurisdicción y Ley Aplicable</h2>
             <p>Este aviso legal se rige por la legislación española. Para cualquier controversia que pudiera surgir, las partes se someten a los juzgados y tribunales de España, con renuncia expresa a cualquier otro fuero que pudiera corresponderles.</p>
         </div>
-        
+
         <div class="legal-section">
-            <h2>7. Modificaciones</h2>
-            <p>Nos reservamos el derecho de modificar este aviso legal en cualquier momento para adaptarlo a novedades legislativas o cambios en el servicio. Las modificaciones entrarán en vigor desde su publicación en este sitio.</p>
+            <h2>7. Modificaciones y precios</h2>
+            <p>Nos reservamos el derecho de modificar este aviso legal en cualquier momento para adaptarlo a novedades legislativas o cambios en el servicio. Las modificaciones entrarán en vigor desde su publicación en este sitio. Los precios del servicio es completamente IC, es decir dinero dentro del juego, dinero ficticio.</p>
         </div>
-        
+
         <div class="legal-section">
             <h2>8. Contacto</h2>
             <p>Para cualquier cuestión relacionada con este aviso legal, puede contactar con nosotros a través de nuestro <a href="https://discord.gg/erV2MnJNza">servidor de Discord</a> o al correo electrónico <a href="mailto:soporte@fastradio.com">soporte@fastradio.com</a>.</p>
@@ -287,9 +310,37 @@
             <a href="index.html">Inicio</a>
             <a href="terminos.html">Términos de Servicio</a>
             <a href="privacidad.html">Política de Privacidad</a>
-            <a href="https://sergiooomdz.github.io/FastRadio_PRICES/">Precios</a>
+            <a href="precios.html">Precios</a>
         </div>
         <p class="copyright">© 2025 FAST RADIO. Todos los derechos reservados. No afiliado a Rockstar Games ni a GTAHUB.GG.</p>
     </footer>
 </body>
+<script>
+    const notif = document.getElementById('notifBlock');
+    
+      function showNotif(msg) {
+        notif.textContent = msg;
+        notif.classList.add('show');
+        setTimeout(() => notif.classList.remove('show'), 3000);
+      }
+    
+      // Bloquear clic derecho
+      document.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        showNotif("❌ Clic derecho desactivado");
+      });
+    
+      // Bloquear herramientas de desarrollo
+      document.addEventListener('keydown', e => {
+        if (
+          e.key === "F12" ||
+          (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+          (e.ctrlKey && e.key === "U")
+        ) {
+          e.preventDefault();
+          showNotif("🚫 Acción bloqueada por seguridad");
+        }
+      });
+</script>
+
 </html>
