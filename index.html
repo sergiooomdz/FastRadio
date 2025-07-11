@@ -739,7 +739,20 @@
     animation: spin 1.5s linear infinite; /* Animación de giro continuo */
     transform-origin: center; /* Asegura que gire desde el centro */
 }
+    .changelog-btn {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
 
+    .changelog-btn:hover {
+        background-color: #0056b3;
+    }
 /* Animación de giro completo 360° */
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -929,7 +942,13 @@
             </div>
         </div>
     </section>
-
+<section class="features" id="features">
+    <div class="section-title" data-aos="fade-up">
+        <h2>CONSULTA TODOS LOS CAMBIOS</h2>
+        <p>Descubre todos los cambios de Fast Radio en tiempo real, visita nuestro changelog</p>
+        <a href="changelog.html" class="changelog-btn">Ir al Changelog</a>
+    </div>
+</section>
     <!-- How It Works -->
     <section class="how-it-works" id="how-it-works">
         <div class="section-title" data-aos="fade-up">
@@ -1142,7 +1161,7 @@
     <section class="cta">
         <div data-aos="fade-up">
             <h2>¿ESTÁS LISTO?</h2>
-            <p>Únete a docenas de personass que ya usan Fast Radio para patrullar las calles de San Andreas con mayor eficiencia.</p>
+            <p>Únete a docenas de personas que ya usan Fast Radio para patrullar las calles de San Andreas con mayor eficiencia.</p>
             <a href="precios.html" class="cta-button pulse">Ver planes y precios</a>
         </div>
     </section>
